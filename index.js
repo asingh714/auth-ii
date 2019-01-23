@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 
 const express = require("express");
 const helmet = require("helmet");
@@ -37,6 +37,45 @@ server.post("/api/register", (req, res) => {
         res.status(500).json({ error: "There was an error while creating the user." })
     })
 
+})
+
+function generateToken(user) {
+    const payload = {
+        subject: user.id,
+        username: user.username,
+        role: user.department
+    }
+
+    const secret = process.env.JWT_SECRET;
+
+    const options = {
+        expiresIn: "1h"
+    }
+
+    return jwt.sign(payload, secret, options)
+
+}
+
+
+
+
+
+
+server.post("/api/login", (req, res) => {
+    const credentials = req.body;
+
+    db("users")
+    .where({ username: credentials.username })
+    .first()
+    .then(user => {
+        if (user && bcrypt.compareSync(credentials.password, user.password)) {
+            const token = generateToken(user);
+            res.status(200).json({ message: `${user.username} is logged in.`, token })
+        } else {
+            res.status(401).json({ message: "You shall not pass!" })
+        }
+    })
+    .catch(err => res.status(500).json(err));
 })
 
 

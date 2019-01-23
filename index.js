@@ -10,6 +10,9 @@ const knexConfig = require('./knexfile.js');
 
 const server = express();
 
+const db = knex(knexConfig.development);
+
+
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
@@ -19,7 +22,22 @@ server.get("/", (req, res) => {
 });
 
 
+server.post("/api/register", (req, res) => {
+    const userInfo = req.body;
 
+    const hash = bcrypt.hashSync(userInfo.password, 14);
+
+    userInfo.password = hash;
+
+    db("users").insert(userInfo)
+    .then(ids => {
+        res.status(201).json(ids);
+    })
+    .catch(err => {
+        res.status(500).json({ error: "There was an error while creating the user." })
+    })
+
+})
 
 
 

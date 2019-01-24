@@ -90,7 +90,7 @@ function lock(req, res, next) {
   }
 }
 
-server.get("/api/users", (req, res) => {
+server.get("/api/users", lock, (req, res) => {
   db("users")
     .select("id", "username", "department")
     .then(users => {

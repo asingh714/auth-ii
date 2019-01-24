@@ -33,25 +33,45 @@ a:hover {
 
 .logout-btn {
   margin-top: 10px;
-  border: 1px solid #61dafb;
+  border: 1px solid white;
   width: 20rem;
   border-radius: 1rem;
   margin: 2rem auto;
   margin-bottom: 5rem;
+  color: white;
+  cursor: pointer;
 }
 
-.user-box {
+.box {
   border: 1px solid white;
   padding: 3rem;
   margin-top: 1rem;
 }
 
+.submit-btn {
+  border: 1px solid white;;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  /* color: white; */
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 2rem;
+}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login {
+  display: flex;
+  flex-direction: column; 
+  padding: 5rem;
+}
+
+input {
+  padding: 1rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  width: 35rem;
+  outline: none;
+}
+
+nav {
+  margin-top: 1rem;
 }

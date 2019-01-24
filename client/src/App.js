@@ -4,6 +4,7 @@ import './App.css';
 
 import Home from "./Home/Home";
 import Users from "./Users/Users";
+import SignIn from "./SignIn/SignIn";
 
 class App extends Component {
   render() {
@@ -24,6 +25,8 @@ class App extends Component {
         <main>
           <Route exact path="/" component={Home}/>
           <Route path="/users" component={Users}/>
+          <Route path="/signin" component={SignIn}/>
+          
         </main>
         </header>
       </div>

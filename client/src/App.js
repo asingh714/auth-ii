@@ -7,6 +7,11 @@ import Users from "./Users/Users";
 import SignIn from "./SignIn/SignIn";
 
 class App extends Component {
+
+  signout = () => {
+    localStorage.removeItem("jwt")
+  }
+
   render() {
     return (
       <div className="App">
@@ -19,7 +24,7 @@ class App extends Component {
           <NavLink to="/signup">Sign Up</NavLink>
           &nbsp;|&nbsp;
           <NavLink to="/signin">Sign In</NavLink>
-            <div className="logout-btn">Log Out</div>
+            <button className="logout-btn" onClick={this.signout}>Log Out</button>
         </nav>
 
         <main>

@@ -121,4 +121,6 @@ server.get("/api/users/department", lock, (req, res) => {
     .catch(err => res.send(err));
 });
 
-server.listen(5000, () => console.log("\nrunning on port 5000\n"));
+
+const port = process.env.PORT || 5000
+server.listen(port, () => console.log(`\nrunning on port ${port}\n`));

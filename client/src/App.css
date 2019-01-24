@@ -40,6 +40,12 @@ a:hover {
   margin-bottom: 5rem;
 }
 
+.user-box {
+  border: 1px solid white;
+  padding: 3rem;
+  margin-top: 1rem;
+}
+
 
 @keyframes App-logo-spin {
   from {

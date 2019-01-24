@@ -3,7 +3,7 @@ import {NavLink, Route} from "react-router-dom";
 import './App.css';
 
 import Home from "./Home/Home";
-
+import Users from "./Users/Users";
 
 class App extends Component {
   render() {
@@ -18,11 +18,12 @@ class App extends Component {
           <NavLink to="/signup">Sign Up</NavLink>
           &nbsp;|&nbsp;
           <NavLink to="/signin">Sign In</NavLink>
-            <div class="logout-btn">Log Out</div>
+            <div className="logout-btn">Log Out</div>
         </nav>
 
         <main>
-          <Route exact to="/" component={Home}/>
+          <Route exact path="/" component={Home}/>
+          <Route path="/users" component={Users}/>
         </main>
         </header>
       </div>

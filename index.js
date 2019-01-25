@@ -20,25 +20,6 @@ server.get("/", (req, res) => {
   res.send("I AM WORKING");
 });
 
-server.post("/api/register", (req, res) => {
-  const userInfo = req.body;
-
-  const hash = bcrypt.hashSync(userInfo.password, 14);
-
-  userInfo.password = hash;
-
-  db("users")
-    .insert(userInfo)
-    .then(ids => {
-      res.status(201).json(ids);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: "There was an error while creating the user." });
-    });
-});
-
 function generateToken(user) {
   const payload = {
     username: user.username,
@@ -48,11 +29,37 @@ function generateToken(user) {
   const secret = process.env.JWT_SECRET;
 
   const options = {
-    expiresIn: "1h"
+    expiresIn: "12h"
   };
 
   return jwt.sign(payload, secret, options);
 }
+
+server.post("/api/register", (req, res) => {
+  const userInfo = req.body;
+
+  const hash = bcrypt.hashSync(userInfo.password, 14);
+
+  userInfo.password = hash;
+
+  db("users")
+    .insert(userInfo)
+    .then(id => {
+      db("users")
+        .where({ username: userInfo.username })
+        .select("id", "username", "department")
+        .first()
+        .then(user => {
+          let token = generateToken(user);
+          res.status(201).json({ user, token });
+        });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: "There was an error while creating the user." });
+    });
+});
 
 server.post("/api/login", (req, res) => {
   const credentials = req.body;
@@ -121,6 +128,5 @@ server.get("/api/users/department", lock, (req, res) => {
     .catch(err => res.send(err));
 });
 
-
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`\nrunning on port ${port}\n`));

@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class SignIn extends Component {
+class SignUp extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    department: ""
   };
 
   handleInputChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    const { name, value } = event.target;
+
+    this.setState({ [name]: value });
   };
 
-  handleSignIn = event => {
+  handleSignUp = event => {
     event.preventDefault();
 
-    const endpoint = `${process.env.REACT_APP_API_URL}/api/login`;
+    const endpoint = `${process.env.REACT_APP_API_URL}/api/register`;
 
     axios
       .post(endpoint, this.state)
@@ -30,8 +31,8 @@ class SignIn extends Component {
   render() {
     return (
       <>
-        <h2>Sign In</h2>
-        <form onSubmit={this.handleSignIn} className="box login">
+        <h2>Sign Up</h2>
+        <form onSubmit={this.handleSignUp} className="box login">
           <input
             name="username"
             type="text"
@@ -46,6 +47,13 @@ class SignIn extends Component {
             onChange={this.handleInputChange}
             placeholder="Password"
           />
+          <input
+            name="department"
+            type="text"
+            value={this.state.department}
+            onChange={this.handleInputChange}
+            placeholder="Department"
+          />
           <button className="submit-btn">Log in</button>
         </form>
       </>
@@ -53,4 +61,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default SignUp;

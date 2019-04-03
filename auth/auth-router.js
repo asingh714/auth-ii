@@ -77,6 +77,16 @@ router.get("/users", restricted, (req, res) => {
     .catch(err => res.send(err));
 });
 
+router.get("/users/department", restricted, (req, res) => {
+  UsersDB("users")
+  .where({ department: req.decodedJwt.department })
+  .select("id", "username", "department", "password")
+  .then(users => {
+    res.json(users);
+  })
+  .catch(err => res.send(err));
+})
+
 function generateToken(user) {
   const payload = {
     subject: user.id,

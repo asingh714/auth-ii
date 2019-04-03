@@ -70,13 +70,12 @@ router.post("/login", (req, res) => {
 
 router.get("/users", restricted, (req, res) => {
   UsersDB("users")
-    .select("id", "username", "department")
+    .select("id", "username", "department", "password")
     .then(users => {
       res.json(users);
     })
     .catch(err => res.send(err));
 });
-
 
 function generateToken(user) {
   const payload = {
@@ -93,7 +92,5 @@ function generateToken(user) {
 
   return jwt.sign(payload, secret, options);
 }
-
-
 
 module.exports = router;

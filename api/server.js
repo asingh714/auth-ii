@@ -8,5 +8,4 @@ middleware(server);
 
 server.use("/api", authRouter);
 
-
 module.exports = server;

@@ -47,7 +47,7 @@ class SignIn extends React.Component {
           type="password"
           value={this.state.password}
         />
-        <button>Log in</button>
+        <button>Sign in</button>
       </form>
     </>
     )

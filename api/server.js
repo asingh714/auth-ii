@@ -1,4 +1,4 @@
-const middleware = require("../config/middleware");
+const middleware = require("./middleware");
 const express = require("express");
 
 const authRouter = require("../auth/auth-router");

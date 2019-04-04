@@ -3,9 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
-const secrets = require("../api/secrets");
+const tokenService = require('../auth/token-service.js');
 const UsersDB = require("../database/dbConfig");
 const restricted = require("../auth/restricted");
 
@@ -27,7 +26,7 @@ router.post("/register", (req, res) => {
           .where({ id })
           .first()
           .then(user => {
-            const token = generateToken(user);
+            const token = tokenService.generateToken(user);
             res.status(201).json({ user, token });
           });
       })
@@ -52,7 +51,7 @@ router.post("/login", (req, res) => {
       .first()
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
-          const token = generateToken(user);
+          const token = tokenService.generateToken(user);
           res
             .status(200)
             .json({ message: `${user.username} is logged in.`, token });
@@ -87,20 +86,6 @@ router.get("/users/department", restricted, (req, res) => {
   .catch(err => res.send(err));
 })
 
-function generateToken(user) {
-  const payload = {
-    subject: user.id,
-    username: user.username,
-    department: user.department
-  };
 
-  const secret = secrets.jwtSecret;
-
-  const options = {
-    expiresIn: "1d" // 1 day
-  };
-
-  return jwt.sign(payload, secret, options);
-}
 
 module.exports = router;

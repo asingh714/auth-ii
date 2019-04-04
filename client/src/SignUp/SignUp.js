@@ -18,10 +18,9 @@ class SignUp extends React.Component {
   handleSignUp = event => {
     event.preventDefault();
     const endpoint = "http://localhost:5000/api/register";
-
     axios.post(endpoint, this.state)
     .then(response => {
-      localStorage.setItem("token", res.data.token)
+      localStorage.setItem("token", response.data.token)
     })
     .catch(error => {
       console.log(error);
@@ -32,7 +31,7 @@ class SignUp extends React.Component {
     return (
       <>
       <h2>Sign Up</h2>
-      <form onSubmit={this.handleSignUp} className="box login">
+      <form onSubmit={this.handleSignUp}>
         <input
           name="username"
           onChange={this.handleInputChange}
@@ -54,7 +53,7 @@ class SignUp extends React.Component {
           type="text"
           value={this.state.department}
         />
-        <button className="submit-btn">Log in</button>
+        <button>Log in</button>
       </form>
     </>
     )

@@ -9,18 +9,10 @@ class Users extends React.Component {
   };
 
   componentDidMount() {
-    const endpoint = "http://localhost:5000/api/users";
-
-    const token = localStorage.getItem("token");
-
-    const requestOptions = {
-      headers: {
-        authorization: token
-      }
-    };
+    const endpoint = "/users";
 
     axios
-      .get(endpoint, requestOptions)
+      .get(endpoint)
       .then(response => {
         this.setState({
           users: response.data
@@ -44,4 +36,4 @@ class Users extends React.Component {
   }
 }
 
-export default Users;
+export default requiresAuth(Users);
